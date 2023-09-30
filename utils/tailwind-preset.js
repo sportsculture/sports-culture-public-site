@@ -2,7 +2,7 @@ const plugin = require('tailwindcss/plugin');
 const pluginTypography = require('@tailwindcss/typography');
 const { COLOR_THEMES, FONT_THEMES } = require('../themes');
 
-const THEME = process.env.BLOG_THEME || 'default';
+const THEME = process.env.BLOG_THEME || 'reddie';
 const FONT_PRIMARY = process.env.BLOG_FONT_HEADINGS || 'sans-serif';
 const FONT_SECONDARY = process.env.BLOG_FONT_BODY || 'sans-serif';
 
@@ -50,13 +50,13 @@ module.exports = {
         secondary: 'var(--font-secondary)',
       },
       theme: {
-        bejamas: {
+        reddie: {
           colors: {
             primary: '#FF8585',
-            'gradient-1': '#7d7aff',
-            'gradient-2': '#2121E2',
-            'gradient-3': '#FF76B8',
-            'gradient-4': '#001AFF',
+            'gradient-1': '#e22121',
+            'gradient-2': '#e22121',
+            'gradient-3': '#e22121',
+            'gradient-4': '#e22121',
           },
         },
       },
