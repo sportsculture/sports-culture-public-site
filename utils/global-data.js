@@ -7,7 +7,7 @@ export const getGlobalData = () => {
     : 'Making the world a better place through sports.';
   const footerText = process.env.BLOG_FOOTER_TEXT
     ? decodeURI(process.env.BLOG_FOOTER_TEXT)
-    : 'All rights reserved. 2023';
+    : 'All rights reserved. Sports Culture Inc. 2023';
 
   return {
     name,
