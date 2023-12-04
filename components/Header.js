@@ -6,7 +6,7 @@ export default function Header({ name }) {
   return (
     <header className="pt-20 pb-12">
         <div className="w-36 h-24 block mx-auto mb-4">
-            <Image src={logoImage} fill/>
+            <Link href="/"><Image src={logoImage} fill/></Link>
         </div>
       <p className="text-2xl dark:text-white text-center">
         <Link href="/">
