@@ -36,3 +36,23 @@ yarn-error.log*
 # netlify
 .netlifycypress/screenshots/
 cypress/videos/
+
+# Cypress
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
