@@ -8,9 +8,39 @@
     CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
     # set TERM variable for terminal output
     TERM = "xterm"
+    NODE_VERSION = "18"
+    NEXT_TELEMETRY_DISABLED = "1"
 
 [[plugins]]
   package = "netlify-plugin-cypress"
   [plugins.inputs]
       record = true
       group = "Testing Built Site"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Enable preview deployments for pull requests
+[context.deploy-preview]
+  command = "npm run build"
+
+# Production context
+[context.production]
+  command = "npm run build"
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
+
+# Redirect all HTTP traffic to HTTPS
+[[redirects]]
+  from = "http://*"
+  to = "https://:splat"
+  status = 301
+  force = true
