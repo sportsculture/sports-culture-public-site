@@ -108,13 +108,13 @@ export default function Careers({ globalData }) {
               Send us your resume, portfolio, and a note about why you&rsquo;re excited about sports technology.
             </p>
             <a 
-              href="mailto:careers@sportsculture.io?subject=Job Application" 
+              href="mailto:mchughson@sportsculture.io?subject=Job Application" 
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors"
             >
               Apply Now
             </a>
             <p className="mt-4 text-sm opacity-60">
-              Or email us directly at careers@sportsculture.io
+              Or email us directly at mchughson@sportsculture.io
             </p>
           </div>
         </div>

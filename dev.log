@@ -1,0 +1,90 @@
+
+> dev
+> next dev
+
+/bin/sh: line 1: yarn: command not found
+  ▲ Next.js 13.5.11
+  - Local:        http://localhost:3000
+
+ ✓ Ready in 769ms
+ ✓ Compiled / in 699ms (287 modules)
+ ✓ Compiled /posts/[slug] in 197ms (299 modules)
+Error: Invalid <Link> with <a> child. Please remove <a> or use <Link legacyBehavior>.
+Learn more: https://nextjs.org/docs/messages/invalid-new-link-with-extra-anchor
+    at LinkComponent (webpack-internal:///./node_modules/next/dist/client/link.js:267:23)
+    at renderWithHooks (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5658:16)
+    at renderForwardRef (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5842:18)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6005:11)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5971:9)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderIndeterminateComponent (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5785:7)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5946:7)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderNode (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6259:12)
+    at renderChildrenArray (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6211:7)
+ ⨯ node_modules/next/dist/client/link.js (272:22) @ LinkComponent
+ ⨯ Error: Invalid <Link> with <a> child. Please remove <a> or use <Link legacyBehavior>.
+Learn more: https://nextjs.org/docs/messages/invalid-new-link-with-extra-anchor
+    at LinkComponent (webpack-internal:///./node_modules/next/dist/client/link.js:267:23)
+    at renderWithHooks (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5658:16)
+    at renderForwardRef (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5842:18)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6005:11)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5971:9)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderIndeterminateComponent (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5785:7)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5946:7)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderNode (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6259:12)
+    at renderChildrenArray (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6211:7) {
+  page: '/posts/Building-a-24-7-Telegram-Monitoring-Service-with-Claude-Code'
+}
+null
+ ✓ Compiled /_error in 61ms (301 modules)
+Error: Invalid <Link> with <a> child. Please remove <a> or use <Link legacyBehavior>.
+Learn more: https://nextjs.org/docs/messages/invalid-new-link-with-extra-anchor
+    at LinkComponent (webpack-internal:///./node_modules/next/dist/client/link.js:267:23)
+    at renderWithHooks (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5658:16)
+    at renderForwardRef (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5842:18)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6005:11)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5971:9)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderIndeterminateComponent (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5785:7)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5946:7)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderNode (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6259:12)
+    at renderChildrenArray (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6211:7)
+ ⨯ node_modules/next/dist/client/link.js (272:22) @ LinkComponent
+ ⨯ Error: Invalid <Link> with <a> child. Please remove <a> or use <Link legacyBehavior>.
+Learn more: https://nextjs.org/docs/messages/invalid-new-link-with-extra-anchor
+    at LinkComponent (webpack-internal:///./node_modules/next/dist/client/link.js:267:23)
+    at renderWithHooks (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5658:16)
+    at renderForwardRef (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5842:18)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6005:11)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5971:9)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderIndeterminateComponent (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5785:7)
+    at renderElement (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:5946:7)
+    at renderNodeDestructiveImpl (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6104:11)
+    at renderNodeDestructive (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6076:14)
+    at renderNode (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6259:12)
+    at renderChildrenArray (/home/mchughson/1-Projects/sports-culture-public-site/node_modules/react-dom/cjs/react-dom-server.browser.development.js:6211:7) {
+  page: '/posts/Building-a-24-7-Telegram-Monitoring-Service-with-Claude-Code'
+}
+null
+ ✓ Compiled /careers in 70ms (305 modules)
+[?25h

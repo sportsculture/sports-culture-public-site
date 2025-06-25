@@ -18,20 +18,16 @@ export default function Header({ name }) {
             </Link>
         </div>
       <p className="text-2xl dark:text-white text-center mb-6">
-        <Link href="/">
-          <a>{name}</a>
+        <Link href="/" className="hover:opacity-70 transition-opacity">
+          {name}
         </Link>
       </p>
       <nav className="flex justify-center space-x-8">
-        <Link href="/">
-          <a className="text-lg dark:text-white hover:opacity-70 transition-opacity">
-            Blog
-          </a>
+        <Link href="/" className="text-lg dark:text-white hover:opacity-70 transition-opacity">
+          Blog
         </Link>
-        <Link href="/careers">
-          <a className="text-lg dark:text-white hover:opacity-70 transition-opacity">
-            Careers
-          </a>
+        <Link href="/careers" className="text-lg dark:text-white hover:opacity-70 transition-opacity">
+          Careers
         </Link>
       </nav>
     </header>
