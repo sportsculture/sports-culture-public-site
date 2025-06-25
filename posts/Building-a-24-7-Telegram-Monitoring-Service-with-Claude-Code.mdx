@@ -1,0 +1,252 @@
+---
+title: "Building a 24/7 Telegram Monitoring Service with Claude Code: From Broken Alerts to Production-Ready Infrastructure"
+description: "How we transformed our unreliable admin dashboard monitoring into a bulletproof server-side alerting system using AI pair programming"
+date: "2025-06-25"
+author: "Sports Culture Team"
+tags: ["monitoring", "telegram", "claude-code", "devops", "infrastructure"]
+published: true
+---
+
+# Building a 24/7 Telegram Monitoring Service with Claude Code: From Broken Alerts to Production-Ready Infrastructure
+
+*How we transformed our unreliable admin dashboard monitoring into a bulletproof server-side alerting system using AI pair programming*
+
+As founders building sports technology, we've learned that nothing kills momentum faster than finding out your platform was down for hours while you were sleeping. Our SpinCulture fitness playlist builder is growing rapidly, and as we prepare to serve thousands of users creating workout playlists, we need bulletproof reliability. When our BPM analysis service crashes or our Spotify integration fails, we need to know immediately.
+
+But here's the thing: we started with the classic mistake that many startups make. Our monitoring only worked when someone had the admin dashboard open in their browser. Talk about a single point of failure!
+
+## The Problem: Browser-Dependent Monitoring
+
+Like many fast-moving startups, we initially built our monitoring into the admin dashboard. It seemed logical at the time:
+
+- Admin logs in → Dashboard checks service health
+- Services down → Dashboard shows red status
+- Admin sees the problem → Admin fixes it
+
+But what happens at 3 AM when no one's looking at the dashboard? What about weekends? Our "monitoring" was really just a fancy status page that only worked during business hours.
+
+We needed real 24/7 monitoring with instant alerts. But as a small team, we didn't want to spend weeks building monitoring infrastructure when we could be shipping features.
+
+## Enter Claude Code: AI-Powered Development
+
+That's where [Claude Code](https://claude.ai/code) changed everything. Instead of researching monitoring solutions for days, we paired with Claude to build a production-ready monitoring service in a single evening.
+
+Here's what we built together:
+
+### The Architecture
+
+```javascript
+// Server-side monitoring service running 24/7
+const services = [
+  'Supabase Database',
+  'Frontend Website', 
+  'BPM Analysis Service',
+  'Spotify API'
+];
+
+// Check every 30 seconds
+setInterval(runHealthChecks, 30000);
+```
+
+### Smart Alerting Logic
+
+The key insight Claude helped us implement: **alert cooldowns**. Nobody wants their phone buzzing every 30 seconds when a service is down.
+
+```javascript
+function shouldSendAlert(service, status) {
+  const key = `${service}-${status}`;
+  const lastAlert = alertState.get(key);
+  
+  // Only alert once every 5 minutes
+  if (!lastAlert || Date.now() - lastAlert > 300000) {
+    alertState.set(key, Date.now());
+    return true;
+  }
+  
+  return false;
+}
+```
+
+### Real-time Telegram Integration
+
+When something breaks, we get instant notifications:
+
+> 🚨 **SpinCulture Monitor Alert**
+> 
+> **BPM Analysis Service** is **DOWN**
+> 
+> Docker container health check failed: Connection refused
+> 
+> *Time: 2:47 AM*
+
+When it recovers:
+
+> ✅ **SpinCulture Monitor Alert**
+> 
+> **BPM Analysis Service** has **RECOVERED**
+> 
+> Service responding normally (156ms)
+> 
+> *Time: 2:52 AM*
+
+## The Development Process
+
+What impressed us most was how Claude Code handled the entire development lifecycle:
+
+### 1. Infrastructure Planning
+Claude analyzed our existing GitHub Actions deployment setup and designed the monitoring service to run independently:
+- No interference with Docker containers
+- Survives deployments and restarts  
+- Minimal resource usage (512MB RAM, 20% CPU)
+
+### 2. Security Best Practices
+Without us asking, Claude implemented:
+- Unprivileged service user
+- Environment variable encryption
+- Systemd resource limits
+- Read-only filesystem access
+
+### 3. Production Deployment
+Claude created deployment scripts that handle:
+- SSH-based deployment to our DigitalOcean servers
+- Systemd service installation
+- Automatic startup on boot
+- GitHub Actions integration
+
+## The Results
+
+Since deploying our Telegram monitoring service:
+
+- **Zero downtime incidents** we didn't know about
+- **5-minute mean time to detection** (down from hours/days)
+- **Automated recovery notifications** so we know when issues self-resolve
+- **Historical data** integrated with our admin dashboard
+
+## Code Highlights
+
+### The Service Check Function
+```javascript
+async function checkBPMService() {
+  try {
+    const response = await fetch('http://localhost:5000/health', {
+      timeout: 10000
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      return {
+        service: 'BPM Analysis Service',
+        status: data.status === 'healthy' ? 'operational' : 'degraded',
+        responseTime: Date.now() - startTime,
+        message: `BPM service ${data.status}`
+      };
+    }
+  } catch (error) {
+    return {
+      service: 'BPM Analysis Service', 
+      status: 'down',
+      message: `Service unreachable: ${error.message}`
+    };
+  }
+}
+```
+
+### Telegram Alert Function
+```javascript
+async function sendTelegramAlert(message, severity = 'warning') {
+  const emoji = {
+    critical: '🚨',
+    warning: '⚠️', 
+    resolved: '✅'
+  }[severity];
+
+  const text = `${emoji} *SpinCulture Monitor Alert*\n\n${message}`;
+  
+  await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text,
+      parse_mode: 'Markdown'
+    })
+  });
+}
+```
+
+## Deployment Made Simple
+
+Claude created a one-command deployment:
+
+```bash
+./deploy.sh
+```
+
+This script:
+1. SSHs to our backend server
+2. Installs Node.js dependencies
+3. Creates system user and service
+4. Starts monitoring immediately
+5. Sends confirmation via Telegram
+
+## Lessons Learned
+
+### 1. AI Pair Programming Accelerates Everything
+What would have taken our team 2-3 days of research and development took 4 hours with Claude Code. The AI understood our architecture, anticipated edge cases, and suggested best practices we wouldn't have thought of.
+
+### 2. Infrastructure as Code from Day One
+Claude helped us create GitHub Actions that deploy monitoring updates automatically. Every change is version controlled and deployed consistently.
+
+### 3. Monitoring Should Be Independent
+Running monitoring as a separate service means it survives application deployments, database migrations, and server restarts. Your monitoring can't go down when your app goes down.
+
+## Next Steps: Advanced Monitoring
+
+Now that we have solid alerting infrastructure, we're expanding with Claude's help:
+
+- **Performance trending** - Alert when response times degrade over time
+- **Error rate monitoring** - Track application error rates from logs  
+- **User experience monitoring** - Synthetic user journey testing
+- **Capacity planning** - Predictive alerts before resources are exhausted
+
+## Building Your Own Monitoring Service
+
+Want to build something similar? Here's what worked for us:
+
+### Prerequisites
+- A server to run monitoring (we use DigitalOcean)
+- Telegram bot token ([create one here](https://t.me/botfather))
+- Basic knowledge of your application architecture
+
+### The Claude Code Prompt
+Start your conversation with:
+
+> "I need to build a 24/7 monitoring service that checks my web application health and sends Telegram alerts when services are down. My stack includes [your technologies]. I want it to run independently on my server and survive deployments."
+
+### Key Features to Request
+- **Service health checks** for each component
+- **Smart alerting** with cooldown periods
+- **Recovery notifications** when services come back
+- **Systemd integration** for automatic startup
+- **Resource limits** to prevent server overload
+- **GitHub Actions** for automated deployment
+
+## Why This Matters for Sports Tech
+
+In sports technology, reliability isn't just about uptime—it's about not missing the moment. As we scale to serve more athletes creating the perfect pre-game playlist or analyzing their workout performance, our platform needs to be rock solid from day one.
+
+The monitoring service Claude helped us build ensures that as our user base grows and athletes depend on our tools, we're ready to deliver. Because in sports, as in startups, timing is everything—and building reliability early means we can focus on features instead of firefighting.
+
+---
+
+## Get Started with Claude Code
+
+Ready to level up your development workflow? [Try Claude Code](https://claude.ai/code) and see how AI pair programming can transform your next project.
+
+*Building the future of sports technology, one monitoring alert at a time.*
+
+**Come Join Our Team** - We're always looking for passionate developers who want to make sports better through technology. [Check out our open positions](https://sportsculture.io/careers).
+
+---
+
+*This article was written by the Sports Culture team. We build technology that makes sports more engaging, accessible, and fun for everyone. Learn more at [sportsculture.io](https://sportsculture.io).*
