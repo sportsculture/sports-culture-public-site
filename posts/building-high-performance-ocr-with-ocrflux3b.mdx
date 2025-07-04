@@ -1,236 +1,130 @@
 ---
-title: "Building a High-Performance OCR System with OCRFlux-3B: From Zero to Production"
+title: "Building a High-Performance OCR System with OCRFlux-3B"
 date: "2025-07-04"
 author: "Sports Culture Team"
-tags: ["AI", "OCR", "Computer Vision", "Home Lab", "GPU Computing"]
-description: "How we built a lightning-fast OCR system using OCRFlux-3B and dual GPUs to process sports documents at scale"
+tags: ["AI", "OCR", "Computer Vision", "GPU Computing"]
+description: "How we built a lightning-fast OCR system using OCRFlux-3B to process sports documents at scale"
 ---
 
-# Building a High-Performance OCR System with OCRFlux-3B: From Zero to Production
+# Building a High-Performance OCR System with OCRFlux-3B
 
-Ever tried to digitize thousands of sports documents, player stats, or game reports? We did, and let me tell you – traditional OCR solutions just weren't cutting it for our needs at Sports Culture. 
+Traditional OCR tools struggle with complex sports documents – player stats, game reports, and historical records with varied layouts. We needed something smarter.
 
-That's when we discovered **OCRFlux-3B**, a vision-language model that's about to change the game for document processing in sports tech.
+Enter **OCRFlux-3B**: a vision-language model that doesn't just read text, but understands sports documents contextually.
 
-## The Problem: Sports Documents Are Messy
+## Why OCRFlux-3B?
 
-Sports organizations deal with tons of documents:
-- Player statistics sheets with complex tables
-- Game reports with handwritten notes  
-- Historical records in various formats
-- Medical forms and training logs
+[OCRFlux-3B](https://huggingface.co/ChatDOC/OCRFlux-3B) is a 3B parameter vision-language model based on Qwen2.5-VL that excels at:
 
-Traditional OCR tools would choke on the variety and complexity. We needed something that could not just read text, but *understand* the context of sports documents.
+- **Complex Layout Handling**: Tables, forms, mixed content
+- **Context Understanding**: Answers questions about document content  
+- **High Accuracy**: 95%+ on sports documents vs 70% traditional OCR
+- **Efficient**: Runs on consumer GPUs (RTX 3090+)
 
-## Enter OCRFlux-3B: The Game Changer
+## Quick Implementation
 
-OCRFlux-3B isn't just another OCR tool – it's a **vision-language model** based on Qwen2.5-VL that can:
-
-- Extract text with incredible accuracy
-- Understand document structure and context
-- Answer questions about images
-- Process complex layouts and handwriting
-
-Think ChatGPT, but for your documents. 🤯
-
-## Our Setup: Home Lab Powerhouse
-
-Here's what we built in our home lab:
-
-```
-Main Machine (10.0.0.xxx)           Worker Node (10.0.0.xx)
-┌─────────────────────┐             ┌──────────────────────────┐
-│ Client Applications │    HTTP     │ OCRFlux-3B API Server    │
-│ - Python scripts   │◄──────────►│ - FastAPI (port 8000)    │
-│ - Web apps         │             │ - Qwen2.5-VL-3B model   │
-│ - Mobile apps      │             │ - Vision processor      │
-└─────────────────────┘             └──────────────────────────┘
-                                    ┌──────────────────────────┐
-                                    │ Hardware Beast           │
-                                    │ - NVIDIA RTX 3090 (24GB)│
-                                    │ - NVIDIA RTX A6000 (48GB)│
-                                    │ - NixOS Environment      │
-                                    └──────────────────────────┘
-```
-
-**Hardware Specs:**
-- **NVIDIA RTX 3090**: 24GB VRAM powerhouse
-- **NVIDIA RTX A6000**: 48GB VRAM professional GPU  
-- **NixOS**: Reproducible environment setup
-- **Total GPU Memory**: 72GB for handling massive models
-
-## The Implementation Journey
-
-### Step 1: Model Setup
-
-Getting OCRFlux-3B running wasn't plug-and-play. The model is based on Qwen2.5-VL architecture, which required some specific handling:
-
+### Model Setup
 ```python
-# The key was using the right model class
 from transformers.models.qwen2_5_vl.modeling_qwen2_5_vl import Qwen2_5_VLForConditionalGeneration
 
 model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-    "./models/OCRFlux-3B",
+    "ChatDOC/OCRFlux-3B",  # Direct from HuggingFace
     torch_dtype=torch.float16,
-    device_map="auto",  # Automatically uses both GPUs!
+    device_map="auto",
     trust_remote_code=True
 )
 ```
 
-### Step 2: API Design
-
-We built a FastAPI server with three main endpoints:
-
+### FastAPI Endpoints
 ```python
-# Health check - because monitoring matters
-@app.get("/health")
-async def health_check():
-    return {
-        "status": "healthy",
-        "model_loaded": True,
-        "gpu_memory": "24GB available"
-    }
-
-# Text generation - for Q&A about documents  
-@app.post("/generate")
-async def generate_text(request: GenerateRequest):
-    # Handles both text and image inputs
-    pass
-
-# Pure OCR - extract text from images
 @app.post("/ocr")
 async def ocr_image(file: UploadFile = File(...)):
-    # Upload any image, get clean text back
+    # Extract text from uploaded image
+    pass
+
+@app.post("/analyze") 
+async def analyze_document(request: AnalyzeRequest):
+    # Smart Q&A about document content
     pass
 ```
 
-### Step 3: Real-World Testing
-
-The moment of truth – testing with actual sports documents:
-
+### Usage Example
 ```bash
-# Basic text extraction
+# Basic OCR
 curl -X POST http://10.0.0.xx:8000/ocr \
-  -F "file=@player_stats.png"
+  -F "file=@game_report.png"
 
-# Smart document analysis  
-curl -X POST http://10.0.0.xx:8000/generate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "prompt": "What team scored the most points in this game report?",
-    "image": "base64_encoded_game_report",
-    "max_tokens": 100
-  }'
+# Smart analysis
+curl -X POST http://10.0.0.xx:8000/analyze \
+  -d '{"prompt": "What was the final score?", "image": "base64_image"}'
 ```
 
-## Performance Results That Blew Our Minds
+## Production Results
 
-Here's what we're seeing in production:
+- **Speed**: 30-60 seconds per document
+- **Accuracy**: 95%+ on sports documents  
+- **Memory**: ~8GB VRAM base usage
+- **Context Understanding**: Finds specific data points on request
 
-- **Text Generation**: ~15-25 seconds for 100 tokens
-- **Image OCR**: ~30-60 seconds per document  
-- **Accuracy**: 95%+ on sports documents (vs 70% with traditional OCR)
-- **GPU Memory**: ~8GB base, efficient scaling
-- **Network Latency**: &lt;1ms on our internal network
-
-But the real magic? **Context understanding**. Ask it "What was the final score?" and it finds the score box. Ask "Who was the MVP?" and it identifies player stats. Game changer! 🏆
-
-## Code Example: Processing a Game Report
-
-Here's how we process a basketball game report in our production system:
+## Python Integration
 
 ```python
 import requests
 import base64
 
 class SportsOCR:
-    def __init__(self):
-        self.base_url = "http://10.0.0.xx:8000"
+    def __init__(self, api_url="http://10.0.0.xx:8000"):
+        self.api_url = api_url
     
-    def analyze_game_report(self, image_path):
-        # First, extract all text
-        with open(image_path, "rb") as f:
-            ocr_response = requests.post(f"{self.base_url}/ocr", 
-                                       files={"file": f})
-        
-        raw_text = ocr_response.json()["extracted_text"]
-        
-        # Then, get structured analysis
+    def process_game_report(self, image_path):
         with open(image_path, "rb") as f:
             image_b64 = base64.b64encode(f.read()).decode()
         
-        analysis_response = requests.post(f"{self.base_url}/generate",
-            json={
-                "prompt": "Extract the final score, top scorers, and key stats from this basketball game report",
-                "image": image_b64,
-                "max_tokens": 200
-            })
+        response = requests.post(f"{self.api_url}/analyze", json={
+            "prompt": "Extract final score, top scorers, and key stats",
+            "image": image_b64
+        })
         
-        return {
-            "raw_text": raw_text,
-            "structured_data": analysis_response.json()["response"]
-        }
+        return response.json()["analysis"]
 
 # Usage
 ocr = SportsOCR()
-game_data = ocr.analyze_game_report("lakers_vs_warriors.png")
-print(game_data["structured_data"])
-# Output: "Final Score: Lakers 118, Warriors 112. Top Scorer: LeBron James with 28 points..."
+result = ocr.process_game_report("lakers_vs_warriors.png")
+# Returns: "Final Score: Lakers 118, Warriors 112. Top Scorer: LeBron James (28 pts)..."
 ```
 
-## Lessons Learned
+## Key Benefits
 
-### 1. Hardware Matters (A Lot)
-Don't even try this with less than 16GB VRAM. We started with a single RTX 3090 and quickly maxed it out. The dual GPU setup with 72GB total VRAM is where the magic happens.
+**For Sports Organizations:**
+- Automated stat extraction from game reports
+- Historical document digitization
+- Real-time game data processing
 
-### 2. Model Architecture is Everything  
-OCRFlux-3B's vision-language architecture is what makes it special. Unlike traditional OCR that just extracts text, this model *understands* what it's looking at.
+**Technical Advantages:**
+- Context-aware processing
+- Multi-format support
+- Scalable API architecture
+- Consumer GPU compatibility
 
-### 3. NixOS = Reproducible Heaven
-Setting up the environment on NixOS meant we could replicate our exact setup anywhere. No more "it works on my machine" problems.
+## Model Resources
 
-### 4. API Design for Scale
-Building proper REST endpoints from day one saved us tons of refactoring. Our mobile apps, web dashboard, and batch processing scripts all use the same API.
+- **Main Model**: [ChatDOC/OCRFlux-3B](https://huggingface.co/ChatDOC/OCRFlux-3B)
+- **GGUF Format**: [brunopio/OCRFlux-3B-Q5_K_M-GGUF](https://huggingface.co/brunopio/OCRFlux-3B-Q5_K_M-GGUF)
+- **Documentation**: [OCRFlux GitHub](https://github.com/chatdoc-com/OCRFlux)
 
-## What's Next?
+## Cost Analysis
 
-We're just getting started. Here's what's on our roadmap:
+- **Hardware**: RTX 3090 (~$1,200)
+- **Development**: 1-2 weeks setup
+- **Operating**: Electricity only
+- **ROI**: 100+ hours/month saved
 
-- **Batch Processing**: Handle hundreds of documents simultaneously
-- **Real-time Streaming**: Process documents as they're uploaded
-- **Multi-language Support**: Sports documents in Spanish, French, etc.
-- **Custom Fine-tuning**: Train on sports-specific terminology
-
-## Want to Build Your Own?
-
-The complete setup is documented in our [home GPU lab project](https://github.com/sports-culture/home-gpu-lab). Everything from hardware setup to production deployment.
-
-Key files to check out:
-- [Complete Setup Guide](docs/OCRFlux-Setup.md) - Hardware to production in one guide
-- [API Reference](docs/API-Reference.md) - Every endpoint documented  
-- [Python Examples](examples/ocr_examples.py) - Real usage patterns
-- [Demo Script](demo_ocr.py) - Try it yourself in 5 minutes
-
-## The Bottom Line
-
-OCRFlux-3B transformed how we handle sports documents at Sports Culture. What used to take hours of manual data entry now happens in seconds, with better accuracy than human transcription.
-
-The combination of powerful hardware, smart model selection, and proper API design created a system that scales from prototype to production seamlessly.
-
-**Cost breakdown:**
-- Hardware: ~$4,000 (RTX 3090 + A6000)
-- Development time: 2 weeks to production
-- Monthly operating cost: Just electricity
-- ROI: Saved 100+ hours/month of manual data entry
-
-For any sports tech startup dealing with document processing, this setup pays for itself in the first month.
+OCRFlux-3B transformed our document processing pipeline. What took hours now happens in seconds with higher accuracy than manual entry.
 
 ---
 
-*Ready to revolutionize your document processing? The future of sports tech runs on AI that actually understands sports. Let's build it together.*
-
-**P.S.** Hit us up [@Cultureofsports](https://x.com/Cultureofsports) if you build something cool with OCRFlux-3B. We love seeing what the community creates! 🚀
+*Building something with OCRFlux-3B? Tag us [@Cultureofsports](https://x.com/Cultureofsports) – we love seeing community innovations!* 🚀
 
 ---
 
-*Tags: #OCR #AI #Sportstech #GPU #ComputerVision #Qwen #FastAPI #NixOS*
+*Tags: #OCR #AI #Sportstech #GPU #ComputerVision #Qwen #FastAPI*
