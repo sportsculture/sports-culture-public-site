@@ -38,7 +38,7 @@ Think ChatGPT, but for your documents. 🤯
 Here's what we built in our home lab:
 
 ```
-Main Machine (10.0.0.254)           Worker Node (10.0.0.69)
+Main Machine (10.0.0.xxx)           Worker Node (10.0.0.xx)
 ┌─────────────────────┐             ┌──────────────────────────┐
 │ Client Applications │    HTTP     │ OCRFlux-3B API Server    │
 │ - Python scripts   │◄──────────►│ - FastAPI (port 8000)    │
@@ -110,11 +110,11 @@ The moment of truth – testing with actual sports documents:
 
 ```bash
 # Basic text extraction
-curl -X POST http://192.168.1.100:8000/ocr \
+curl -X POST http://10.0.0.xx:8000/ocr \
   -F "file=@player_stats.png"
 
 # Smart document analysis  
-curl -X POST http://10.0.0.69:8000/generate \
+curl -X POST http://10.0.0.xx:8000/generate \
   -H "Content-Type: application/json" \
   -d '{
     "prompt": "What team scored the most points in this game report?",
@@ -145,7 +145,7 @@ import base64
 
 class SportsOCR:
     def __init__(self):
-        self.base_url = "http://10.0.0.69:8000"
+        self.base_url = "http://10.0.0.xx:8000"
     
     def analyze_game_report(self, image_path):
         # First, extract all text
