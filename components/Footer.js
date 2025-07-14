@@ -78,11 +78,41 @@ const ThemeSwitcher = () => {
 };
 
 export default function Footer({ copyrightText }) {
+  const currentDate = new Date().toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+
   return (
     <footer className="py-16 flex flex-col items-center">
       <p className="dark:text-white uppercase mb-3 font-bold opacity-60">
         {copyrightText}
       </p>
+      
+      <div className="text-center mb-6 space-y-2">
+        <p className="dark:text-white text-sm opacity-60">
+          Updated {currentDate}
+        </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
+          <a 
+            href="mailto:questions@sportsculture.io" 
+            className="dark:text-white text-primary hover:opacity-80 transition-opacity"
+          >
+            questions@sportsculture.io
+          </a>
+          <span className="hidden sm:inline dark:text-white opacity-40">•</span>
+          <a 
+            href="https://x.com/Cultureofsports" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="dark:text-white text-primary hover:opacity-80 transition-opacity"
+          >
+            @Cultureofsports
+          </a>
+        </div>
+      </div>
+      
       <ThemeSwitcher />
     </footer>
   );

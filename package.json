@@ -36,7 +36,7 @@
     "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^5.9.4",
+    "@netlify/plugin-nextjs": "^5.11.6",
     "autoprefixer": "^10.4.17",
     "cypress": "^13.6.4",
     "eslint": "^8.56.0",
